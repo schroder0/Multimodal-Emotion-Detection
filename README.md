@@ -1,94 +1,90 @@
-# Multimodal Emotion Detection Frontend
+# Multimodal Emotion Detection System
 
-React-based frontend for the multimodal emotion detection system.
+A complete end-to-end system that detects human emotions using a combination of Text, Emojis, and Images. This project leverages the **Chain-of-Thought (CoT)** reasoning capabilities of large language models (LLaMA 3.3 70B via Groq) alongside Vision-Language Models (BLIP) to logically deduce emotions, resolving complex cases like sarcasm and masked feelings.
 
-## Setup
+---
 
-### Prerequisites
-- Node.js 14+ and npm
+## 🚀 Quick Start Guide
 
-### Installation
+This project is divided into two parts: a **Python FastAPI Backend** and a **React.js Frontend**. You must run both servers simultaneously for the app to work.
+
+### 1. Start the Backend Server
+The backend handles the AI models, image captioning (BLIP), and the Groq API connection.
+
+Open a new terminal window and run:
 
 ```bash
-# Install dependencies
+# Navigate to the project root (if not already there)
+cd /path/to/multimodal_emotion_detection
+
+# 1. Activate the virtual environment
+# On macOS/Linux:
+source backend/venv/bin/activate
+# On Windows:
+# .\backend\venv\Scripts\activate
+
+# 2. Set up your environment variables
+# Ensure you have a .env file inside the /backend directory with:
+# GROQ_API_KEY=your_groq_api_key_here
+
+# 3. Start the FastAPI server
+python backend/main.py
+```
+*The backend server will start running on **http://localhost:8000**.*
+
+---
+
+### 2. Start the Frontend Server
+The frontend is a React application that provides the User Interface.
+
+Open a **second, separate terminal window** and run:
+
+```bash
+# Navigate to the frontend directory
+cd /path/to/multimodal_emotion_detection/frontend
+
+# 1. Install Node modules (only needed the first time)
 npm install
 
-# Set environment variables (optional)
-# Create .env file or update .env.local
-echo "REACT_APP_API_URL=http://localhost:8000" > .env.local
+# 2. Fix macOS permissions (Run this ONLY if npm start gives a 'Permission denied' error)
+chmod +x node_modules/.bin/react-scripts
+xattr -rd com.apple.quarantine node_modules
 
-# Start development server
+# 3. Start the React development server
 npm start
 ```
+*The frontend will automatically open in your browser at **http://localhost:3000**.*
 
-The app will open at http://localhost:3000
+---
 
-## Environment Variables
-
-Create a `.env.local` file in the frontend directory:
-
-```
-REACT_APP_API_URL=http://localhost:8000
-```
-
-## Building for Production
-
-```bash
-npm run build
-```
-
-The optimized build will be in the `build` directory.
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-frontend/
-├── public/
-│   └── index.html
-├── src/
-│   ├── components/
-│   │   ├── InputForm.js
-│   │   ├── InputForm.css
-│   │   ├── ResultCard.js
-│   │   └── ResultCard.css
-│   ├── App.js
-│   ├── App.css
-│   ├── index.js
-│   └── index.css
-├── package.json
-└── README.md
+multimodal_emotion_detection/
+│
+├── backend/                  # Python FastAPI Backend
+│   ├── modules/              # Core logic (context_builder, emoji_utils, image_utils)
+│   ├── venv/                 # Python Virtual Environment
+│   ├── main.py               # API Entry Point
+│   ├── pipeline.py           # Orchestration Pipeline
+│   ├── requirements.txt      # Python dependencies
+│   └── .env                  # Environment Variables (Keep secure!)
+│
+├── frontend/                 # React.js Frontend
+│   ├── public/               
+│   ├── src/                  
+│   │   ├── components/       # UI Components (InputForm, ResultCard)
+│   │   ├── App.js            # Main React App
+│   │   └── App.css           # Global Styles
+│   └── package.json          # Node dependencies
+│
+├── report.tex                # Academic Project Report (LaTeX)
+├── Presentation.pptx         # Project Presentation
+├── PROJECT_REPORT.md         # Markdown version of the report
+└── PROJECT_TECH_SUMMARY.md   # Tech Stack overview
 ```
 
-## Components
-
-### InputForm
-- Text input with emoji support
-- Image upload functionality
-- Form validation
-- Loading state during analysis
-
-### ResultCard
-- Displays detected emotion
-- Shows confidence score
-- Detailed reasoning breakdown
-- Context summary
-
-## Features
-
-✨ **Interactive UI**
-- Real-time text input
-- Image preview
-- Responsive design
-- Smooth animations
-
-📊 **Detailed Results**
-- Emotion with emoji
-- Confidence score with progress bar
-- Multi-step reasoning explanation
-- Context summary
-
-🎨 **Beautiful Design**
-- Gradient background
-- Color-coded emotions
-- Smooth transitions
-- Mobile responsive
+## 🧠 Technologies Used
+* **Frontend**: React.js, Vanilla CSS
+* **Backend**: Python, FastAPI, Uvicorn
+* **AI Models**: LLaMA 3.3 70B (via Groq API), BLIP Image Captioning (Hugging Face)
